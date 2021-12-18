@@ -53,7 +53,7 @@ void ASpyCamera::BoxBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActo
 	TransitionParams.BlendTime=1.0f;
 	TransitionParams.bLockOutgoing=true;
 	PC->SetViewTarget(this,TransitionParams);
-	if (!bIsSomethingSpotted) GetWorldTimerManager().SetTimer(SpottingTimer,this,&ThisClass::SpotPlayer,1.f,false,2);
+	if (!bIsSomethingSpotted) GetWorldTimerManager().SetTimer(SpottingTimer,this,&ThisClass::SpotPlayer,1.f,false,SpotTime);
 	if (bIsSomethingSpotted)GetWorldTimerManager().ClearTimer(UnSpottingTimer);
 	bAlert=true;
 	DetectingLight->SetEnabled(true);
@@ -69,7 +69,7 @@ void ASpyCamera::BoxEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor*
 	TransitionParams.bLockOutgoing=true;
 	PC->SetViewTarget(PC->GetPawn(),TransitionParams);
 
-	if (bIsSomethingSpotted) GetWorldTimerManager().SetTimer(UnSpottingTimer, this,&ThisClass::UnSpotPlayer,1.f,false,4);
+	if (bIsSomethingSpotted) GetWorldTimerManager().SetTimer(UnSpottingTimer, this,&ThisClass::UnSpotPlayer,1.f,false,UnSpotTime);
 	if (GetWorldTimerManager().TimerExists(SpottingTimer)) GetWorldTimerManager().ClearTimer(SpottingTimer);
 	bAlert=false;
 	DetectingLight->SetEnabled(false);
